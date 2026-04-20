@@ -1,0 +1,37 @@
+policy:
+  name: "commercial-software"
+  description: "商业软件使用的开源协议风险策略"
+
+  allowed:
+    - MIT
+    - Apache-2.0
+    - BSD-2-Clause
+    - BSD-3-Clause
+    - ISC
+    - 0BSD
+    - Unlicense
+    - CC0-1.0
+    - Zlib
+
+  conditional:
+    - id: LGPL-2.1
+      condition: "dynamic-link-only"
+      note: "仅动态链接时可用于商业软件"
+    - id: LGPL-3.0
+      condition: "dynamic-link-only"
+      note: "仅动态链接时可用于商业软件"
+    - id: MPL-2.0
+      condition: "file-level-copyleft"
+      note: "修改的文件需开源，但可与私有代码结合"
+
+  forbidden:
+    - id: GPL-2.0
+      reason: "强 Copyleft，会传染至整个项目"
+    - id: GPL-3.0
+      reason: "强 Copyleft，会传染至整个项目"
+    - id: AGPL-3.0
+      reason: "网络服务也需要开源，商业 SaaS 产品风险极高"
+    - id: SSPL-1.0
+      reason: "服务条款极为严格"
+
+  unknown_policy: "warn"
