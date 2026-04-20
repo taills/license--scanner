@@ -6,6 +6,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/taills/license--scanner/internal/analyzer"
+	"github.com/taills/license--scanner/internal/license"
 )
 
 // TextReporter 以终端彩色文本输出扫描结果。
@@ -28,7 +29,7 @@ func (r *TextReporter) Report(result analyzer.ScanResult, w io.Writer) error {
 	)
 	for _, dep := range result.Dependencies {
 		tag := dep.Risk.String()
-		if dep.Risk.String() == "high" || dep.Risk.String() == "critical" {
+		if dep.Risk == license.RiskHigh || dep.Risk == license.RiskCritical {
 			tag = danger(tag)
 		}
 		fmt.Fprintf(w, "- [%s] %s@%s (%s) license=%s source=%s\n  原因: %s\n", tag, dep.Name, dep.Version, dep.Ecosystem, dep.LicenseID, dep.LicenseSource, dep.RiskReason)

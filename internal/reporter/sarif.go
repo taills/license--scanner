@@ -5,6 +5,7 @@ import (
 	"io"
 
 	"github.com/taills/license--scanner/internal/analyzer"
+	"github.com/taills/license--scanner/internal/license"
 )
 
 // SARIFReporter 输出 SARIF 格式报告。
@@ -39,7 +40,7 @@ func (r *SARIFReporter) Report(result analyzer.ScanResult, w io.Writer) error {
 	}{}
 	run.Tool.Driver.Name = "license-scanner"
 	for _, dep := range result.Dependencies {
-		if dep.Risk.String() == "none" || dep.Risk.String() == "low" {
+		if dep.Risk == license.RiskNone || dep.Risk == license.RiskLow {
 			continue
 		}
 		sr := sarifResult{RuleID: "license-risk-" + dep.Risk.String(), Level: toSARIFLevel(dep.Risk.String())}
